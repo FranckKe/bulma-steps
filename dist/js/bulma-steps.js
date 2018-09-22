@@ -85,6 +85,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -94,8 +96,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var onStepsPrevious = Symbol('onStepsPrevious');
-var onStepsNext = Symbol('onStepsNext');
+var onStepsPrevious = Symbol("onStepsPrevious");
+var onStepsNext = Symbol("onStepsNext");
 
 var bulmaSteps = function (_EventEmitter) {
   _inherits(bulmaSteps, _EventEmitter);
@@ -107,13 +109,13 @@ var bulmaSteps = function (_EventEmitter) {
 
     var _this = _possibleConstructorReturn(this, (bulmaSteps.__proto__ || Object.getPrototypeOf(bulmaSteps)).call(this));
 
-    _this.element = typeof selector === 'string' ? document.querySelector(selector) : selector;
+    _this.element = typeof selector === "string" ? document.querySelector(selector) : selector;
     // An invalid selector or non-DOM node has been provided.
     if (!_this.element) {
-      throw new Error('An invalid selector or non-DOM node has been provided.');
+      throw new Error("An invalid selector or non-DOM node has been provided.");
     }
 
-    _this._clickEvents = ['click'];
+    _this._clickEvents = ["click"];
     /// Set default options and merge with instance defined
     _this.options = _extends({}, __WEBPACK_IMPORTED_MODULE_1__defaultOptions__["a" /* default */], options);
 
@@ -132,7 +134,7 @@ var bulmaSteps = function (_EventEmitter) {
 
 
   _createClass(bulmaSteps, [{
-    key: 'init',
+    key: "init",
 
 
     /**
@@ -141,7 +143,7 @@ var bulmaSteps = function (_EventEmitter) {
      * @return {void}
      */
     value: function init() {
-      this._id = 'bulmaSteps' + new Date().getTime() + Math.floor(Math.random() * Math.floor(9999));
+      this._id = "bulmaSteps" + new Date().getTime() + Math.floor(Math.random() * Math.floor(9999));
 
       this.steps = this.element.querySelectorAll(this.options.selector);
       this.contents = this.element.querySelectorAll(this.options.selector_content);
@@ -149,7 +151,7 @@ var bulmaSteps = function (_EventEmitter) {
       this.next_btn = this.element.querySelector(this.options.next_selector);
 
       [].forEach.call(this.steps, function (step, index) {
-        step.setAttribute('data-step-id', index);
+        step.setAttribute("data-step-id", index);
       });
 
       if (this.steps && this.steps.length) {
@@ -159,7 +161,7 @@ var bulmaSteps = function (_EventEmitter) {
 
       this._bindEvents();
 
-      this.emit('bulmasteps:ready', this.element.value);
+      this.emit("bulmasteps:ready", this.element.value);
     }
 
     /**
@@ -169,7 +171,7 @@ var bulmaSteps = function (_EventEmitter) {
      */
 
   }, {
-    key: '_bindEvents',
+    key: "_bindEvents",
     value: function _bindEvents() {
       var _this2 = this;
 
@@ -203,7 +205,7 @@ var bulmaSteps = function (_EventEmitter) {
     value: function value(e) {
       e.preventDefault();
 
-      if (!e.target.getAttribute('disabled')) {
+      if (!e.target.getAttribute("disabled")) {
         this.previous_step();
       }
     }
@@ -212,95 +214,143 @@ var bulmaSteps = function (_EventEmitter) {
     value: function value(e) {
       e.preventDefault();
 
-      if (!e.target.getAttribute('disabled')) {
+      if (!e.target.getAttribute("disabled")) {
         this.next_step();
       }
     }
   }, {
-    key: 'get_current_step_id',
+    key: "get_current_step_id",
     value: function get_current_step_id() {
       for (var i = 0; i < this.steps.length; i++) {
         var step = this.steps[i];
 
         if (step.classList.contains(this.options.active_class)) {
-          return parseInt(step.getAttribute('data-step-id'));
+          return parseInt(step.getAttribute("data-step-id"));
         }
       }
 
       return null;
     }
   }, {
-    key: 'updateActions',
+    key: "updateActions",
     value: function updateActions(step) {
-      var stepId = parseInt(step.getAttribute('data-step-id'));
+      var stepId = parseInt(step.getAttribute("data-step-id"));
       if (stepId == 0) {
         if (this.previous_btn != null) {
-          this.previous_btn.setAttribute('disabled', 'disabled');
+          this.previous_btn.setAttribute("disabled", "disabled");
         }
         if (this.next_btn != null) {
-          this.next_btn.removeAttribute('disabled', 'disabled');
+          this.next_btn.removeAttribute("disabled", "disabled");
         }
       } else if (stepId == this.steps.length - 1) {
         if (this.previous_btn != null) {
-          this.previous_btn.removeAttribute('disabled', 'disabled');
+          this.previous_btn.removeAttribute("disabled", "disabled");
         }
         if (this.next_btn != null) {
-          this.next_btn.setAttribute('disabled', 'disabled');
+          this.next_btn.setAttribute("disabled", "disabled");
         }
       } else {
         if (this.previous_btn != null) {
-          this.previous_btn.removeAttribute('disabled', 'disabled');
+          this.previous_btn.removeAttribute("disabled", "disabled");
         }
         if (this.next_btn != null) {
-          this.next_btn.removeAttribute('disabled', 'disabled');
+          this.next_btn.removeAttribute("disabled", "disabled");
         }
       }
     }
   }, {
-    key: 'next_step',
-    value: function next_step() {
-      var current_id = this.get_current_step_id();
+    key: "next_step",
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var current_id, next_id, errors, i;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                current_id = this.get_current_step_id();
 
-      if (current_id == null) {
-        return;
-      }
+                if (!(current_id == null)) {
+                  _context.next = 3;
+                  break;
+                }
 
-      var next_id = current_id + 1,
-          errors = [];
+                return _context.abrupt("return");
 
-      if (typeof this.options.beforeNext != 'undefined' && this.options.beforeNext != null && this.options.beforeNext) {
-        errors = this.options.beforeNext(current_id);
-      }
-      this.emit('bulmasteps:before:next', current_id);
+              case 3:
+                next_id = current_id + 1, errors = [];
 
-      if (typeof errors == 'undefined') {
-        errors = [];
-      }
+                if (!(typeof this.options.beforeNext != "undefined" && this.options.beforeNext != null && this.options.beforeNext)) {
+                  _context.next = 13;
+                  break;
+                }
 
-      if (errors.length > 0) {
-        this.emit('bulmasteps:errors', errors);
-        for (var i = 0; i < errors.length; i++) {
-          if (typeof this.options.onError != 'undefined' && this.options.onError != null && this.options.onError) {
-            this.options.onError(errors[i]);
+                _context.next = 7;
+                return this.options.beforeNext(current_id);
+
+              case 7:
+                errors = _context.sent;
+
+                if (!(errors === true)) {
+                  _context.next = 12;
+                  break;
+                }
+
+                this.emit("bulmasteps:before:next", current_id);
+                _context.next = 13;
+                break;
+
+              case 12:
+                return _context.abrupt("return");
+
+              case 13:
+
+                if (typeof errors == "undefined") {
+                  errors = [];
+                }
+
+                if (!(errors.length > 0)) {
+                  _context.next = 18;
+                  break;
+                }
+
+                this.emit("bulmasteps:errors", errors);
+                for (i = 0; i < errors.length; i++) {
+                  if (typeof this.options.onError != "undefined" && this.options.onError != null && this.options.onError) {
+                    this.options.onError(errors[i]);
+                  }
+                }
+
+                return _context.abrupt("return");
+
+              case 18:
+
+                if (next_id >= this.steps.length - 1) {
+                  if (typeof this.options.onFinish != "undefined" && this.options.onFinish != null && this.options.onFinish) {
+                    this.options.onFinish(current_id);
+                  }
+                  this.emit("bulmasteps:finish", current_id);
+                }
+                if (next_id < this.steps.length) {
+                  this.complete_step(current_id);
+                  this.activate_step(next_id);
+                }
+
+              case 20:
+              case "end":
+                return _context.stop();
+            }
           }
-        }
+        }, _callee, this);
+      }));
 
-        return;
+      function next_step() {
+        return _ref.apply(this, arguments);
       }
 
-      if (next_id >= this.steps.length - 1) {
-        if (typeof this.options.onFinish != 'undefined' && this.options.onFinish != null && this.options.onFinish) {
-          this.options.onFinish(current_id);
-        }
-        this.emit('bulmasteps:finish', current_id);
-      }
-      if (next_id < this.steps.length) {
-        this.complete_step(current_id);
-        this.activate_step(next_id);
-      }
-    }
+      return next_step;
+    }()
   }, {
-    key: 'previous_step',
+    key: "previous_step",
     value: function previous_step() {
       var current_id = this.get_current_step_id();
       if (current_id == null) {
@@ -317,7 +367,7 @@ var bulmaSteps = function (_EventEmitter) {
      */
 
   }, {
-    key: 'activate_step',
+    key: "activate_step",
     value: function activate_step(step_id) {
       this.updateActions(this.steps[step_id]);
 
@@ -332,40 +382,40 @@ var bulmaSteps = function (_EventEmitter) {
       }
 
       this.steps[step_id].classList.add(this.options.active_class);
-      if (typeof this.contents[step_id] !== 'undefined') {
+      if (typeof this.contents[step_id] !== "undefined") {
         this.contents[step_id].classList.add(this.options.active_class);
       }
 
-      if (typeof this.options.onShow != 'undefined' && this.options.onShow != null && this.options.onShow) {
+      if (typeof this.options.onShow != "undefined" && this.options.onShow != null && this.options.onShow) {
         this.options.onShow(step_id);
       }
 
-      this.emit('bulmasteps:step:show', step_id);
+      this.emit("bulmasteps:step:show", step_id);
     }
   }, {
-    key: 'complete_step',
+    key: "complete_step",
     value: function complete_step(step_id) {
       this.steps[step_id].classList.add(this.options.completed_class);
-      this.emit('bulmasteps:step:completed', step_id);
+      this.emit("bulmasteps:step:completed", step_id);
     }
   }, {
-    key: 'uncomplete_step',
+    key: "uncomplete_step",
     value: function uncomplete_step(step_id) {
       this.steps[step_id].classList.remove(this.options.completed_class);
-      this.emit('bulmasteps:step:uncompleted', step_id);
+      this.emit("bulmasteps:step:uncompleted", step_id);
     }
   }, {
-    key: 'deactivate_step',
+    key: "deactivate_step",
     value: function deactivate_step(step_id) {
       this.steps[step_id].classList.remove(this.options.active_class);
-      if (typeof this.contents[step_id] !== 'undefined') {
+      if (typeof this.contents[step_id] !== "undefined") {
         this.contents[step_id].classList.remove(this.options.active_class);
       }
     }
   }], [{
-    key: 'attach',
+    key: "attach",
     value: function attach() {
-      var selector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '.steps';
+      var selector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ".steps";
       var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
       var instances = new Array();
