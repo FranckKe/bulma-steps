@@ -246,9 +246,6 @@ var bulmaSteps = function (_EventEmitter) {
         if (this.previous_btn != null) {
           this.previous_btn.removeAttribute("disabled", "disabled");
         }
-        if (this.next_btn != null) {
-          this.next_btn.setAttribute("disabled", "disabled");
-        }
       } else {
         if (this.previous_btn != null) {
           this.previous_btn.removeAttribute("disabled", "disabled");
